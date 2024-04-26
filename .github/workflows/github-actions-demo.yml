@@ -25,6 +25,7 @@ jobs:
 
       - name: Add origin and pull latest changes
         run: |
+          cd repo2/
           git remote add origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
           git pull origin prod
 
