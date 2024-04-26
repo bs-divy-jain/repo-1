@@ -26,12 +26,13 @@ jobs:
       - name: Add origin and pull latest changes
         run: |
           cd repo2/
-          git remote add origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
-          git pull origin prod
+          git remote remove origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
+          git remote add origin2 https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
+          git remote remove origin2 https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
+          git pull origin2 prod
 
       - name: Commit and push changes
         run: |
-          git remote remove origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
           git remote add origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/DivyJain23/repo2.git
           git add .
           git commit -m "Took latest pull from repo1 dev"
