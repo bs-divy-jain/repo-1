@@ -1,4 +1,4 @@
-name: Sync Repos on Prod Push
+name: Sync Repos on Prod Push (Improved)
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repo1
         uses: actions/checkout@v3
@@ -19,19 +18,37 @@ jobs:
       - name: Checkout Repo2
         uses: actions/checkout@v3
         with:
-          repository: DivyJain23/repo2  # Replace with your repo2 details
+          repository: DivyJain/repo2  # Replace with your repo2 details
+
+      - name: Install required action for deploy token authentication
+        uses: apps/app-auth@v3  # Official GitHub Apps action
+
+      - name: Configure authentication with deploy token
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          gh auth login --with-token <<<"$DEPLOY_TOKEN"
 
       - name: Pull changes from Repo1
         run: |
-          cd repo1
+          cd repo-1
           git pull origin prod
 
-      - name: Push changes to Repo2 (force with push)
+      - name: Push changes to Repo2 (rebase with conflict handling)
         run: |
           cd repo2
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
-          git pull origin main
-          git merge --ff-only origin prod  # Attempt fast-forward merge
-          git push origin main  # Force push if merge fails (use with caution)
+
+          # Attempt a rebase to integrate changes efficiently
+          git pull --rebase origin main
+
+          # If conflicts arise, provide clear instructions and a safe fallback
+          if [ $? -ne 0 ]; then
+            echo "Conflicts detected during rebase. Please resolve conflicts locally and push again."
+            echo "Alternatively, use a merge strategy like 'git merge --strategy=ours' (be cautious) if conflicts are expected."
+            exit 1  # Halt workflow execution to prevent accidental force push
+          fi
+
+          git push origin main
 
