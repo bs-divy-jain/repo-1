@@ -26,7 +26,6 @@ jobs:
           git config --global user.name "GitHub Action"
           git clone https://${{ secrets.DEPLOY_TOKEN }}@github.com/DivyJain23/repo2.git
           cd repo2
-          rm -rf repo2
           git checkout main
 
       - name: Copy code from repo1 to repo2
