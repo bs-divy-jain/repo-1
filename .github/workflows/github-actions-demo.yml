@@ -14,7 +14,7 @@ jobs:
         with:
           path: 'repo1'
           ref: prod
-          persist-credentitals: false
+          persist-credentials: false
       
       - name: Checkout Repo2
         uses: actions/checkout@v2
@@ -23,11 +23,11 @@ jobs:
           token: ${{secrets.DEPLOY_TOKEN}}
           path: 'repo2'
           ref: prod
-          persist-credentitals: true
+          persist-credentials: true
 
       - name: Copy code from repo1 to repo2
         run: |
-          cp repo1/ repo2/
+          cp -r repo1/* repo2/
           cd repo2
           git config user.email "divyjaiin161@gmail.com"
           git config user.name "DivyJain23"
