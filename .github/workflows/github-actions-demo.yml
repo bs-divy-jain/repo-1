@@ -9,32 +9,27 @@ jobs:
   deploy-code:
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout Repo1
-      #   uses: actions/checkout@v2
-      #   with:
-      #     path: 'repo1'
-      #     ref: prod
-      #     persist-credentials: false
-      #     fetch-depth: 0  # Fetch the entire history of the branch
-      
-      - name: Checkout Repo2
+      - name: Checkout Repo1
         uses: actions/checkout@v2
         with:
-          path: 'repo2'
-          repository: DivyJain23/repo2
-          token: ${{ secrets.DEPLOY_TOKEN }}
-          ref: main
-          persist-credentials: true
-          fetch-depth: 0  # Fetch the entire history of the branch
+          repository: bs-divy-jain/repo-1
+          ref: prod
+          persist-credentials: false
 
-      - name: Update dev branch with changes from prod branch
-        shell: bash
-        # working-directory: repo2
+      - name: Set up Git
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
+
+      - name: Add origin and pull latest changes
+        run: |
           git remote add origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
           git pull origin prod
+
+      - name: Commit and push changes
+        run: |
+          git remote remove origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
+          git remote add origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/DivyJain23/repo2.git
           git add .
           git commit -m "Took latest pull from repo1 dev"
-          git push origin2 Head:main
+          git push origin HEAD:main
