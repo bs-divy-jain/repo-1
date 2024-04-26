@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Repo2
         uses: actions/checkout@v2
         with:
-          repository: DivyJain23/repo2 # Replace with your repo2 details
+          repository: DivyJain23/repo2
           token: ${{secrets.DEPLOY_TOKEN}}
           path: 'repo2'
           ref: main
@@ -20,20 +20,21 @@ jobs:
 
       - name: Set up Git
         run: |
+          cd repo2/
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
 
-      - name: Add origin and pull latest changes
+      - name: Pull latest changes from repo1
         run: |
           cd repo2/
           git remote remove origin
           git remote add origin2 https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
           git pull origin2 prod
-          git remote remove origin2
 
       - name: Commit and push changes
         run: |
-          git remote add origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/DivyJain23/repo2.git
+          cd repo2/
+          git remote remove origin2
           git add .
           git commit -m "Took latest pull from repo1 dev"
           git push origin HEAD:main
