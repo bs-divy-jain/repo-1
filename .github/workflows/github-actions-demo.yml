@@ -31,8 +31,8 @@ jobs:
         run: |
           git config --global user.email "divyjain161@gmail.com"
           git config --global user.name "DivyJain23"
-          git checkout prod 
+          git checkout main 
           git pull ../repo1 prod
           git add .
           git commit -m "Took latest pull from repo1 dev"
-          git push origin HEAD:prod
+          git push origin HEAD:main
