@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p repo2/
-          cp -rvT repo1 repo2
+          cp -rvT repo1/ repo2/
 
       - name: Check for new files
         id: newFiles
