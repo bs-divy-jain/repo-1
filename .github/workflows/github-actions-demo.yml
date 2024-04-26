@@ -20,6 +20,7 @@ jobs:
       - name: Checkout Repo2
         uses: actions/checkout@v2
         with:
+          path: 'repo2'
           repository: DivyJain23/repo2
           token: ${{ secrets.DEPLOY_TOKEN }}
           ref: main
