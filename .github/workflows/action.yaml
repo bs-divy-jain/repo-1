@@ -1,8 +1,9 @@
-name: Sync Repos
+name: Sync Repos on Prod Push
 
 on:
   push:
-    branches: [ prod ]  # Optional: Trigger on any push to prod
+    branches:
+      - prod  # Trigger workflow on pushes to the prod branch of repo1
 
 jobs:
   sync:
@@ -10,28 +11,27 @@ jobs:
 
     steps:
       - name: Checkout Repo1
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          repository: bs-divy-jain/repo-1  # Ensure correct name
+          repository: bs-divy-jain/repo-1  # Replace with your repo1 details
           ref: prod
-          token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Checkout Repo2
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          repository: DivyJain23/repo2
-          ref: main
+          repository: DivyJain23/repo2  # Replace with your repo2 details
 
       - name: Pull changes from Repo1
         run: |
           cd repo-1
           git pull origin prod
 
-      - name: Push changes to Repo2 (rebase)
+      - name: Push changes to Repo2 (force with push)
         run: |
           cd repo2
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
-          git pull --rebase ../repo-1 prod
-          git push origin main
+          git pull origin main
+          git merge --ff-only origin prod  # Attempt fast-forward merge
+          git push origin main  # Force push if merge fails (use with caution)
 
