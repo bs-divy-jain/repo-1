@@ -28,7 +28,7 @@ jobs:
       - name: Copy common files to new repo
         shell: bash
         run: |
-          cp -rvT repo1/* repo2/
+          cp -r repo1/* repo2/
 
       - name: Check for new files
         id: newFiles
