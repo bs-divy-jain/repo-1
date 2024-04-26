@@ -9,12 +9,14 @@ jobs:
   deploy-code:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo1
+      - name: Checkout Repo2
         uses: actions/checkout@v2
         with:
-          repository: bs-divy-jain/repo-1
-          ref: prod
-          persist-credentials: false
+          repository: DivyJain23/repo2 # Replace with your repo2 details
+          token: ${{secrets.DEPLOY_TOKEN}}
+          path: 'repo2'
+          ref: main
+          persist-credentials: true
 
       - name: Set up Git
         run: |
