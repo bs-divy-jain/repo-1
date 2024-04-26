@@ -11,18 +11,27 @@ jobs:
     steps:
       - name: Checkout Repo1
         uses: actions/checkout@v2
-
-      - name: Install GitHub CLI and configure authentication
+      
+      - name: Install and configure deploy token authentication
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+      
+      - name: Install GitHub CLI
         run: |
           sudo apt update
           sudo apt install curl
-          curl -fsSL https://cli.github.com/packages/releases/latest/download/gh-linux-x86_64 -o gh
-          chmod +x gh
-          mv gh /usr/local/bin/
-          gh auth login --with-token ${{ secrets.DEPLOY_TOKEN }}
+          sudo apt install -y software-properties-common
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository https://cli.github.com/packages
+          sudo apt update
+          sudo apt install gh
+      
+      - name: Configure authentication with deploy token
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          gh auth login --with-token <<<"$DEPLOY_TOKEN"
       
       - name: Clone Repo2
         uses: actions/checkout@v2
