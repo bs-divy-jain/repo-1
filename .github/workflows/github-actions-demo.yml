@@ -33,4 +33,4 @@ jobs:
           git config user.name "DivyJain23"
           git add .
           git commit -m "Update from repo1 ($(date))"
-          git push origin HEAD:prod
+          git push origin HEAD:main
