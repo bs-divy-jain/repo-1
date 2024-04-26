@@ -19,14 +19,18 @@ jobs:
       
       - name: Clone repo2
         run: |
-          git config --global user.email "divyjain161@gmail.com"
+          git config --global user.email "divyjaiin161@gmail.com"
           git config --global user.name "DivyJain23"
           git config --global credential.helper cache
+          if [ -d "repo2" ]; then
+            rm -rf repo2
+          fi
           git clone https://${{secrets.DEPLOY_TOKEN}}@github.com/DivyJain23/repo2.git
 
       - name: Copy code from repo1 to repo2
         run: |
-          cp -r * repo2/
+          shopt -s dotglob
+          cp -r !(repo2) repo2/
           cd repo2
           git add .
           git commit -m "Update from repo1 ($(date))"
