@@ -1,4 +1,4 @@
-name: Deploy to Repo 2
+name: Push to Repo2
 
 on:
   push:
@@ -6,16 +6,23 @@ on:
       - prod
 
 jobs:
-  deploy_to_repo2:
+  push_to_repo2:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
+      - name: Checkout Repo1
         uses: actions/checkout@v2
       
-      - name: Push code to Repo 2
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.REPO2 }}
-          branch: main
-          repository: DivyJain23/repo2
+      - name: Clone Repo2
+        run: git clone https://github.com/DivyJain23/repo2.git repo2
+
+      - name: Copy changes to Repo2
+        run: cp -r * repo2/
+
+      - name: Commit and Push to Repo2
+        working-directory: ./repo2
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Automated commit: Sync changes from Repo1"
+          git push
