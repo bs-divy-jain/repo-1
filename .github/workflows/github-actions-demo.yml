@@ -17,14 +17,17 @@ jobs:
         env:
           DEPLOY_TOKEN: '${{ secrets.DEPLOY_TOKEN }}'
       
-      - name: Clone and push code
+      - name: Clone repo2
         run: |
-          git config --global user.email "divyjaiin161@gmail.com"
+          git config --global user.email "divyjain161@gmail.com"
           git config --global user.name "DivyJain23"
           git config --global credential.helper cache
           git clone https://${{secrets.DEPLOY_TOKEN}}@github.com/DivyJain23/repo2.git
+
+      - name: Copy code from repo1 to repo2
+        run: |
           cp -r * repo2/
-          cd ./repo2
+          cd repo2
           git add .
-          git commit -m "$(date)"
+          git commit -m "Update from repo1 ($(date))"
           git push
