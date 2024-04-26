@@ -9,27 +9,27 @@ jobs:
   deploy-code:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo1
-        uses: actions/checkout@v2
-        with:
-          path: 'repo1'
-          ref: prod
-          persist-credentials: false
-          fetch-depth: 0  # Fetch the entire history of the branch
-      
-      # - name: Checkout Repo2
+      # - name: Checkout Repo1
       #   uses: actions/checkout@v2
       #   with:
-      #     path: 'repo2'
-      #     repository: DivyJain23/repo2
-      #     token: ${{ secrets.DEPLOY_TOKEN }}
-      #     ref: main
-      #     persist-credentials: true
+      #     path: 'repo1'
+      #     ref: prod
+      #     persist-credentials: false
       #     fetch-depth: 0  # Fetch the entire history of the branch
+      
+      - name: Checkout Repo2
+        uses: actions/checkout@v2
+        with:
+          path: 'repo2'
+          repository: DivyJain23/repo2
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          ref: main
+          persist-credentials: true
+          fetch-depth: 0  # Fetch the entire history of the branch
 
       - name: Update dev branch with changes from prod branch
         shell: bash
-        working-directory: repo2
+        # working-directory: repo2
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
