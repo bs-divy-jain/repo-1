@@ -34,7 +34,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Action"
           git remote add origin1 https://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@github.com/bs-divy-jain/repo-1.git
-          git remote add origin2 https://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@github.com/DivyJain23/repo2.git
+          git remote add origin2 https://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@github.com/DivyJain23/repo2.git
           git pull origin1 prod
           git add .
           git commit -m "Took latest pull from repo1 dev"
