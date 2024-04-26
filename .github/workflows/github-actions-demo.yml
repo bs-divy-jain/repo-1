@@ -17,15 +17,15 @@ jobs:
         with:
           python-version: '3.x'
       
-    - name: Install GitHub CLI
-      run: |
-        sudo apt update
-        sudo apt install -y curl
-        sudo apt install -y software-properties-common
-        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-        sudo apt-add-repository "deb [arch=amd64] https://cli.github.com/packages stable main"
-        sudo apt update
-        sudo apt install -y gh
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install -y curl
+          sudo apt install -y software-properties-common
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository "deb [arch=amd64] https://cli.github.com/packages stable main"
+          sudo apt update
+          sudo apt install -y gh
 
 
       - name: Configure authentication with deploy token
