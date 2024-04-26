@@ -3,7 +3,7 @@ name: deploy-code
 on:
   push:
     branches:
-      - main # Change this to your main branch
+      - prod # Change this to your main branch
 
 jobs:
   deploy-code:
