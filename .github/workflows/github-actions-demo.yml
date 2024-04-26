@@ -16,12 +16,17 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+      
       - name: Install GitHub CLI
         run: |
+          sudo apt update
+          sudo apt install curl
+          sudo apt install -y software-properties-common
           sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
           sudo apt-add-repository https://cli.github.com/packages
           sudo apt update
           sudo apt install gh
+      
       - name: Configure authentication with deploy token
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
