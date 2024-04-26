@@ -8,19 +8,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repo1
         uses: actions/checkout@v2
-      - name: Install mustache (to update the date)
-        run:  apk add ruby && gem install mustache
-      - name: creates output
-        run:  sh ./build.sh
-      - name: Pushes to another repository
+        with:
+          path: 'repo1'
+          ref: prod
+          persist-credentials: false
+      
+      - name: Checkout Repo2
+        uses: actions/checkout@v2
+        with:
+          repository: DivyJain23/repo2
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          path: 'repo2'
+          ref: main
+          persist-credentials: false
+
+      - name: Install Ruby and Mustache Gem
         run: |
-          git config --global user.email "divyjain161@gmail.com"
-          git config --global user.name "DivyJain23"
-          git clone https://${{ secrets.DEPLOY_TOKEN }}@github.com/DivyJain23/repo2.git
+          sudo apt-get update
+          sudo apt-get install -y ruby-full
+          sudo gem install mustache
+
+      - name: Copy code from Repo1 to Repo2
+        run: |
+          cp -r repo1/* repo2/
+
+      - name: Commit and push changes to Repo2
+        run: |
           cd repo2
-          cp -r ../repo1/* ./
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Action"
           git add .
-          git commit -m "Update from repo1 ($(date))"
+          git commit -m "Update from Repo1 (on $(date))"
           git push origin HEAD:main
