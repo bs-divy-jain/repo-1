@@ -26,13 +26,14 @@ jobs:
           persist-credentials: true
           fetch-depth: 0  # Fetch the entire history of the branch
 
-      - name: Take pull from prod into dev
+      - name: Update dev branch with changes from prod branch
         shell: bash
         working-directory: repo2
         run: |
           git config --global user.email "divyjain161@gmail.com"
           git config --global user.name "DivyJain23"
-          git pull ../repo1 prod
+          git fetch ../repo1 prod:dev
+          git checkout dev
           git add .
           git commit -m "Took latest pull from repo1 dev"
-          git push origin HEAD:main
+          git push origin dev:main
