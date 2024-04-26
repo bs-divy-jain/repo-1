@@ -1,4 +1,4 @@
-name: Push to Repo2
+name: Push to Repo2 on Prod Merge
 
 on:
   push:
@@ -9,20 +9,23 @@ jobs:
   push_to_repo2:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo1
-        uses: actions/checkout@v2
-      
-      - name: Clone Repo2
-        run: git clone https://github.com/DivyJain23/repo2.git repo2
+      - uses: actions/checkout@v3
 
-      - name: Copy changes to Repo2
-        run: cp -r * repo-1/
-
-      - name: Commit and Push to Repo2
-        working-directory: ./repo2
+      - name: Install required action and Configure authentication
+        uses: apps/app-auth@v2  # Using the official GitHub Apps action
+        env:
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Automated commit: Sync changes from Repo1"
-          git push
+          gh auth login --with-token  # Using the gh CLI from the GitHub Apps action
+
+      - name: Clone Repo2
+        uses: actions/checkout@v3
+        with:
+          repository: DivyJain23/repo2 # Replace with your repo2 details
+          path: ./repo2
+
+      - name: Update Repo1
+        run: git pull -u origin prod && echo "Updated Repo1 from prod branch" || echo "Failed to update Repo1"
+
+      - name: Push to Repo2 (prod branch)
+        run: git push origin prod && echo "Successfully pushed to Repo2" || echo "Failed to push to Repo2"
