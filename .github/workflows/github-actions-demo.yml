@@ -19,7 +19,6 @@ jobs:
       
       - name: Clone and push code
         run: |
-          cd lib
           git config --global user.email "divyjaiin161@gmail.com"
           git config --global user.name "DivyJain23"
           git config --global credential.helper cache
