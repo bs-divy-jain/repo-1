@@ -25,12 +25,28 @@ jobs:
           ref: main
           persist-credentials: true
 
-      - name: Copy code from repo1 to repo2
+      - name: Copy common files to new repo
+        shell: bash
         run: |
-          cp -r repo1/* repo2/
-          cd repo2
-          git config user.email "divyjaiin161@gmail.com"
+          mkdir -p repo2/
+          cp -rvT repo1 repo2
+      - name: Check for new files
+        id: newFiles
+        shell: bash
+        working-directory: repo2
+        run: |
+          git add -A
+          git status --porcelain | wc -1 
+          if [[ $(gti status --porcelain | wc -1) -gt 0]];
+            echo "::set-output name=hasNewFiles::true"
+          else
+            echo "::set-output name=hasNewFiles::false"
+          fi
+      - name: Push new files
+        shell: bash
+        working-directory: repo2
+        run: |
+          git config --global user.email "divyjaiin161@gmail.com"
           git config user.name "DivyJain23"
-          git add .
           git commit -m "Update from repo1 ($(date))"
           git push origin HEAD:main
