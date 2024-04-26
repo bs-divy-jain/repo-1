@@ -1,49 +1,35 @@
-name: Push to Repo2 on Prod Merge
+name: deploy-code
 
 on:
   push:
     branches:
-      - prod
+      - main # Change this to your main branch
 
 jobs:
-  push_to_repo2:
+  deploy-code:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo1
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       
-      - name: Install and configure deploy token authentication
-        uses: actions/setup-python@v2
+      - uses: actions/setup-node@v2
         with:
-          python-version: '3.x'
-      
-      - name: Install GitHub CLI
-        run: |
-          sudo apt update
-          sudo apt install -y curl
-          sudo apt install -y software-properties-common
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-          sudo apt-add-repository "deb [arch=amd64] https://cli.github.com/packages stable main"
-          sudo apt update
-          sudo apt install -y gh
-
-
-      - name: Configure authentication with deploy token
+          node-version: '14'
         env:
-          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
-        run: |
-          gh auth login --with-token <<<"$DEPLOY_TOKEN"
+          DEPLOY_TOKEN: '${{ secrets.DEPLOY_TOKEN }}'
+          
+      - run: npm install
       
-      - name: Clone Repo2
-        uses: actions/checkout@v2
-        with:
-          repository: DivyJain23/repo2 # Replace with your repo2 details
-          path: ./repo2
-
-      - name: Push changes to Repo2 (prod branch)
-        working-directory: ./repo2
+      - run: npm run build
+      
+      - name: Clone and push code
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Action"
-          git pull origin prod --ff-only
-          git push origin prod
+          cd lib
+          git config --global user.email "divyjaiin161@gmail.com"
+          git config --global user.name "DivyJain23"
+          git config --global credential.helper cache
+          git clone https://${{secrets.DEPLOY_TOKEN}}@github.com/DivyJain23/repo2.git
+          cp -r * repo2/
+          cd ./repo2
+          git add .
+          git commit -m "$(date)"
+          git push
