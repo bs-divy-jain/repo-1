@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir -p repo2/
           cp -rvT repo1 repo2
-          
+
       - name: Check for new files
         id: newFiles
         shell: bash
@@ -38,7 +38,7 @@ jobs:
         run: |
           git add -A
           git status --porcelain | wc -1 
-          if [[ $(gti status --porcelain | wc -1) -gt 0]];
+          if [[ $(git status --porcelain | wc -1) -gt 0]];
             echo "::set-output name=hasNewFiles::true"
           else
             echo "::set-output name=hasNewFiles::false"
