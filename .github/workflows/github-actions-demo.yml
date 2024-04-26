@@ -25,29 +25,14 @@ jobs:
           ref: main
           persist-credentials: true
 
-      - name: Copy common files to new repo
-        shell: bash
-        run: |
-          cp -r repo1/* repo2/
-
-      - name: Check for new files
-        id: newFiles
+      - name: Take pull from prod into dev
         shell: bash
         working-directory: repo2
         run: |
+          git config --global user.email "divyjain161@gmail.com"
+          git config --global user.name "DivyJain23"
+          git checkout dev 
+          git pull ../repo1 prod
           git add .
-          git status --porcelain
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "::set-output name=hasNewFiles::true"
-          else
-            echo "::set-output name=hasNewFiles::false"
-          fi
-      - name: Push new files
-        if: ${{ steps.newFiles.output.hasNewFiles == true}}
-        shell: bash
-        working-directory: repo2
-        run: |
-          git config --global user.email "divyjaiin161@gmail.com"
-          git config user.name "DivyJain23"
-          git commit -m "Update from repo1 ($(date))"
-          git push origin HEAD:main
+          git commit -m "Took latest pull from repo1 dev"
+          git push origin HEAD:dev
