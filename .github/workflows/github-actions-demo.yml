@@ -19,11 +19,12 @@ jobs:
       - name: Checkout Repo2
         uses: actions/checkout@v2
         with:
-          repository: DivyJain23/repo2 # Replace with your repo2 details
-          token: ${{secrets.DEPLOY_TOKEN}}
+          repository: DivyJain23/repo2
+          token: ${{ secrets.DEPLOY_TOKEN }}
           path: 'repo2'
           ref: main
           persist-credentials: true
+          fetch-depth: 0  # Fetch the entire history of the branch
 
       - name: Take pull from prod into dev
         shell: bash
@@ -31,7 +32,6 @@ jobs:
         run: |
           git config --global user.email "divyjain161@gmail.com"
           git config --global user.name "DivyJain23"
-          git checkout main 
           git pull ../repo1 prod
           git add .
           git commit -m "Took latest pull from repo1 dev"
