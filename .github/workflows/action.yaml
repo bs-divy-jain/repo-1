@@ -1,3 +1,5 @@
+# This is a basic workflow to help you get started with Actions
+
 name: CI
 
 on:
@@ -7,38 +9,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: pandoc/latex
     steps:
-      - name: Checkout Repo1
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Install mustache (to update the date)
+        run:  apk add ruby && gem install mustache
+      - name: creates output
+        run:  sh ./build.sh
+      - name: Pushes to another repository
+        id: push_directory
+        uses: bs-divy-jain/repo-1@prod
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.DEPLOY_TOKEN }}
         with:
-          path: 'repo1'
-          ref: prod
-          persist-credentials: false
-      
-      - name: Checkout Repo2
-        uses: actions/checkout@v2
-        with:
-          repository: DivyJain23/repo2
-          token: ${{ secrets.DEPLOY_TOKEN }}
-          path: 'repo2'
-          ref: main
-          persist-credentials: false
-
-      - name: Install Ruby and Mustache Gem
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ruby-full
-          sudo gem install mustache
-
-      - name: Copy code from Repo1 to Repo2
-        run: |
-          cp -r repo1/* repo2/
-
-      - name: Commit and push changes to Repo2
-        run: |
-          cd repo2
-          git config --global user.email "divyjain161@gmail.com"
-          git config --global user.name "DivyJain23"
-          git add .
-          git commit -m "Update from Repo1 (on $(date))"
-          git push origin HEAD:main
+          source-directory: .
+          destination-github-username: 'DivyJain23'
+          destination-repository-name: 'repo2'
+          user-email: divyjain161@gmail.com
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: main
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
