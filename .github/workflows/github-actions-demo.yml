@@ -16,7 +16,7 @@ jobs:
         run: git clone https://github.com/DivyJain23/repo2.git repo2
 
       - name: Copy changes to Repo2
-        run: cp -r * repo2/
+        run: cp -r * repo-1/
 
       - name: Commit and Push to Repo2
         working-directory: ./repo2
