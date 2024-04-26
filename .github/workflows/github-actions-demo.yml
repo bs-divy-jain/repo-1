@@ -29,8 +29,7 @@ jobs:
 
       - name: Copy code from repo1 to repo2
         run: |
-          shopt -s dotglob
-          cp -r !(repo2) repo2/
+          cp -r * repo2/
           cd repo2
           git add .
           git commit -m "Update from repo1 ($(date))"
