@@ -16,10 +16,6 @@ jobs:
           node-version: '14'
         env:
           DEPLOY_TOKEN: '${{ secrets.DEPLOY_TOKEN }}'
-          
-      - run: npm install
-      
-      - run: npm run build
       
       - name: Clone and push code
         run: |
