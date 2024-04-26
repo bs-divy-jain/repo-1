@@ -16,6 +16,6 @@ jobs:
       - name: Push code to Repo 2
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.TOKEN }}
+          github_token: ${{ secrets.REPO2 }}
           branch: main
           repository: DivyJain23/repo2
