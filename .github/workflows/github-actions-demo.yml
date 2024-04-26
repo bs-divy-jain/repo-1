@@ -35,7 +35,7 @@ jobs:
         shell: bash
         working-directory: repo2
         run: |
-          git add -A
+          git add .
           git status --porcelain | wc -1 
           if [[ $(git status --porcelain | wc -1) -gt 0]];
             echo "::set-output name=hasNewFiles::true"
@@ -43,6 +43,7 @@ jobs:
             echo "::set-output name=hasNewFiles::false"
           fi
       - name: Push new files
+        if: ${{ steps.newFiles.output.hasNewFiles == true}}
         shell: bash
         working-directory: repo2
         run: |
