@@ -16,7 +16,7 @@ jobs:
           token: ${{secrets.DEPLOY_TOKEN}}
           path: 'repo2'
           ref: main
-          persist-credentials: true
+          persist-credentials: false
 
       - name: Set up Git
         run: |
