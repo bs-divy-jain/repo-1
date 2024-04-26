@@ -26,9 +26,9 @@ jobs:
       - name: Add origin and pull latest changes
         run: |
           cd repo2/
-          git remote remove origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
+          git remote remove origin
           git remote add origin2 https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
-          git remote remove origin2 https://${{ secrets.DEPLOY_TOKEN }}@github.com/bs-divy-jain/repo-1.git
+          git remote remove origin2s
           git pull origin2 prod
 
       - name: Commit and push changes
