@@ -12,18 +12,18 @@ jobs:
       # - name: Checkout Repo1
       #   uses: actions/checkout@v2
       #   with:
-      #     repository: bs-divy-jain/repo-1.git  # Replace with your repo1 details
-      #     ref: prod
       #     path: repo1
+      #     ref: prod
+      #     repository: bs-divy-jain/repo-1.git  # Replace with your repo1 details
       #     token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Checkout Repo2
         uses: actions/checkout@v2
         with:
+          path: 'repo2'
+          ref: main
           repository: DivyJain/repo2.git  # Replace with your repo2 details
           token: ${{ secrets.DEPLOY_TOEKN}}
-          ref: main
-          path: 'repo2'
 
       - name: Pull changes from Repo1
         run: |
