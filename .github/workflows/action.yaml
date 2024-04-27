@@ -28,7 +28,7 @@ jobs:
 
       - name: Pull changes from Repo1
         run: |
-          cd repo-1
+          cd repo1
           git pull origin prod
 
       - name: Push changes to Repo2 (rebase with conflict handling)
