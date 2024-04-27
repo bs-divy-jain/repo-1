@@ -20,7 +20,7 @@ jobs:
       - name: Checkout Repo2
         uses: actions/checkout@v2
         with:
-          repository: DivyJain/repo2  # Replace with your repo2 details
+          repository: DivyJain/repo2.git  # Replace with your repo2 details
           token: ${{ secrets.DEPLOY_TOEKN}}
           ref: main
           path: 'repo2'
