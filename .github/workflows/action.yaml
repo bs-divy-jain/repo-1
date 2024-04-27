@@ -28,7 +28,8 @@ jobs:
 
       - name: Pull changes from Repo1
         run: |
-          cd repo1
+          cd repo2
+          git remote set origin https://github.com/bs-divy-jain/repo-1
           git pull origin prod
 
       - name: Push changes to Repo2 (rebase with conflict handling)
