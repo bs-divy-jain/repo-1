@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Repo1
         uses: actions/checkout@v3
         with:
-          repository: bs-divy-jain/repo-1  # Replace with your repo1 details
+          repository: bs-divy-jain/repo-1.git  # Replace with your repo1 details
           ref: prod
           token: ${{ secrets.DEPLOY_TOKEN }}
 
