@@ -9,18 +9,20 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo1
-        uses: actions/checkout@v3
-        with:
-          repository: bs-divy-jain/repo-1.git  # Replace with your repo1 details
-          ref: prod
-          token: ${{ secrets.DEPLOY_TOKEN }}
+      # - name: Checkout Repo1
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: bs-divy-jain/repo-1.git  # Replace with your repo1 details
+      #     ref: prod
+      #     path: repo1
+      #     token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Checkout Repo2
         uses: actions/checkout@v3
         with:
           repository: DivyJain/repo2  # Replace with your repo2 details
           ref: main
+          path: repo2
           token: ${{ secrets.DEPLOY_TOEKN}}
 
       - name: Pull changes from Repo1
