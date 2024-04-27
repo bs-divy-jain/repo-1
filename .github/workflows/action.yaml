@@ -29,7 +29,7 @@ jobs:
       - name: Pull changes from Repo1
         run: |
           cd repo2
-          git remote add origin https://github.com/bs-divy-jain/repo-1
+          git remote -v
           git pull origin prod
 
       - name: Push changes to Repo2 (rebase with conflict handling)
