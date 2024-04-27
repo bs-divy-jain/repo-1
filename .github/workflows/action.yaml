@@ -30,7 +30,6 @@ jobs:
         run: |
           cd repo2
           git remote -v
-          git remote add origin2 https://${{secrets.DEPLOY_TOKEN}}github.com/bs-divy-jain/repo-1
           git pull origin2 prod
 
       - name: Push changes to Repo2 (rebase with conflict handling)
