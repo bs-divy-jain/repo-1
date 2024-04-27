@@ -23,7 +23,7 @@ jobs:
           path: 'repo2'
           ref: main
           repository: DivyJain/repo2.git  # Replace with your repo2 details
-          token: ${{ secrets.DEPLOY_TOEKN}}
+          token: ${{ secrets.DEPLOY_TOKEN_REPO1}}
 
       - name: Pull changes from Repo1
         run: |
