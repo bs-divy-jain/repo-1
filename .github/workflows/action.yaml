@@ -21,7 +21,7 @@ jobs:
         with:
           path: 'repo2'
           ref: main
-          repository: DivyJain/repo2.git  # Replace with your repo2 details
+          repository: DivyJain23/repo2  # Replace with your repo2 details
           token: ${{ secrets.DEPLOY_TOKEN_REPO1}}
           fetch-depth: 0
           persist-credentials: true
