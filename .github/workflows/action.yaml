@@ -15,8 +15,6 @@ jobs:
           path: 'repo1'
           ref: prod
           persist-credentials: false
-          repository: bs-divy-jain/repo-1.git  # Replace with your repo1 details
-          token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Checkout Repo2
         uses: actions/checkout@v3
